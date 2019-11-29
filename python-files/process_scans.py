@@ -46,7 +46,7 @@ def process_scans(download_info, path):
                 # print("Sono in process scan, folder is "+scan_dirs)
                 # print("output folder is "+download_info[j]["Subject Folder"]+'/'+download_info[j]['Session ID'])
                 # print(download_info[j]["Subject Folder"]+'/'+download_info[j]['Session ID'])
-                eng.cd("/home/xnat/Documents/Executables/Matlab-files", nargout=0)
+                eng.cd("/home/xnat/Documents/XNAT-PIC/pipelines/stable/CIM-XNAT-pipelines/matlab-files", nargout=0)
                 # print(eng.ls())
 	        print(download_info[j]["Scan Type"])
 		if download_info[j]["Scan Type"] == ['EPI diffusion map']:
