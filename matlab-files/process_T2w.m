@@ -190,7 +190,7 @@ fprintf(fid,'5. Produce output files\n');
 fclose(fid);
 
 % save variables
-save([folder_name '_T2map' '_variables.mat' ])
+save([folder_name '_T2w:_map' '_variables.mat' ])
 
 end
 
