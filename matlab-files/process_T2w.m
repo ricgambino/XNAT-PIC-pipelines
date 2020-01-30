@@ -74,7 +74,7 @@ function process_T2w(input_img_dir,output_img_dir)
         dicom_factor = metadata.(dicomlookup('0028', '1053')); 
         
         % Image conversion from 16 to 32 bit
-        image_vect(:,:,k)=double((double(image(:,:,k))./double(dicom_factor)));
+        image_vect(:,:,k) = double((double(image(:,:,k))./double(dicom_factor)));
 
     end
     
@@ -97,27 +97,27 @@ function process_T2w(input_img_dir,output_img_dir)
         for j=1:size_x
             if seg_img(i,j,1)>0
                for t=1:nEchoes
-                   vect_analysis(t)=image_vect(i,j,t);
+                   vect_analysis(t) = image_vect(i,j,t);
                end
-               start_point=[(image_vect(i,j,1)-image_vect(i,j,nEchoes)), 10, image_vect(i,j,nEchoes)];
+               start_point = [(image_vect(i,j,1)-image_vect(i,j,nEchoes)), 10, image_vect(i,j,nEchoes)];
                [estimates, model, exitflag] = fitcurveT2(tEchoes, vect_analysis, start_point);
                if (exitflag < 1) %iteration limit reached, not converged
                    T2w_image(i,j) = -1;
                    Mzero_image(i,j) = -1;
                    off_image(i,j) = -1;
                elseif (estimates(2) > 1000)  %stima errata
-                   T2w_image(i,j) =-2;
-                   Mzero_image(i,j) =-2;
-                   off_image(i,j) =-2;
+                   T2w_image(i,j) = -2;
+                   Mzero_image(i,j) = -2;
+                   off_image(i,j) = -2;
                else
-                    T2w_image(i,j)=estimates(2);
-                    Mzero_image(i,j)=estimates(1);
-                    off_image(i,j)=estimates(3);
+                    T2w_image(i,j) = estimates(2);
+                    Mzero_image(i,j) = estimates(1);
+                    off_image(i,j) = estimates(3);
                end
             else
-               T2w_image(i,j)=0;
-               Mzero_image(i,j)=0;
-               off_image(i,j)=0;
+               T2w_image(i,j) = 0;
+               Mzero_image(i,j) = 0;
+               off_image(i,j) = 0;
             end
         end
     end
@@ -127,34 +127,34 @@ function process_T2w(input_img_dir,output_img_dir)
     %cd('T2_images');   
     
     % T2 map figure
-    h_t2w_map=figure('Name', 'T2w map [ms]');
-    T2w_map=imshow(T2w_image, [0 200]);
+    h_t2w_map = figure('Name', 'T2w map [ms]');
+    T2w_map = imshow(T2w_image, [0 5]);
     axis square   
     colorbar
     title('T2w map [ms]')
     saveas(h_t2w_map, [folder_name '_T2w_map.jpg']);
     
     % Save nifti
-    resolution=[fov(1)*10/size_xy(1), fov(2)*10/size_xy(2), slice_thickness(1)];
-    origin =[0 0 0]; 
-    datatype =64;
+    resolution = [fov(1)*10/size_xy(1), fov(2)*10/size_xy(2), slice_thickness(1)];
+    origin = [0 0 0]; 
+    datatype = 64;
     
-    T2w_nii= make_nii(T2w_image(:,:,:), origin, datatype, '');
-    T2w_nii_or=rri_orient_t1w(T2w_nii);
+    T2w_nii = make_nii(T2w_image(:,:,:), origin, datatype, '');
+    T2w_nii_or = rri_orient_t1w(T2w_nii);
     save_nii(T2w_nii_or, [folder_name '_T2w_map.nii']);
 
     % R2 map figure
     for i=1:size_y 
         for j=1:size_x  
             if seg_img(i,j,1)>0 
-                R2_image(i,j)= (T2w_image(i,j)/1000)^-1; 
+                R2_image(i,j) = (T2w_image(i,j))^-1; 
             else
-                R2_image(i,j)=0; 
+                R2_image(i,j) = 0; 
             end
         end
     end
 
-    h_r2map=figure('Name', 'R2 map [s]');
+    h_r2map = figure('Name', 'R2 map [s]');
     imshow(R2_image, [0 200]); 
     axis square;
     colorbar;
@@ -162,15 +162,15 @@ function process_T2w(input_img_dir,output_img_dir)
     saveas(h_r2map, [folder_name '_R2_map' '.jpg']);
     
     % Save nifti
-    resolution=[fov(1)*10/size_xy(1), fov(2)*10/size_xy(2), slice_thickness(1)];
-    origin =[0 0 0]; 
-    datatype =64;
+    resolution = [fov(1)*10/size_xy(1), fov(2)*10/size_xy(2), slice_thickness(1)];
+    origin = [0 0 0]; 
+    datatype = 64;
     
-    R2_nii= make_nii(R2_image(:,:,:), origin, datatype, '');
-    R2_nii_or=rri_orient_t1w(R2_nii);
+    R2_nii = make_nii(R2_image(:,:,:), origin, datatype, '');
+    R2_nii_or = rri_orient_t1w(R2_nii);
     save_nii(R2_nii_or, [folder_name '_R2_map.nii']);
 
-fileout=[folder_name '_log_file.txt']
+fileout = [folder_name '_log_file.txt']
 fid=fopen([fileout],'a+');
 if fid<0
    msgbox('Problems with file name: check and try again');
