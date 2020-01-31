@@ -140,7 +140,7 @@ function process_T2w(input_img_dir,output_img_dir)
     datatype = 64;
     
     T2w_nii = make_nii(T2w_image(:,:,:), voxel_size, origin, datatype, '');
-    T2w_nii_or = rri_orient_t1w(T2w_nii);
+    T2w_nii_or = rri_orient_no_ui(T2w_nii);
     save_nii(T2w_nii_or, [folder_name '_T2w_map.nii']);
 
     % R2 map figure
@@ -166,8 +166,8 @@ function process_T2w(input_img_dir,output_img_dir)
     origin = [0 0 0]; 
     datatype = 64;
     
-    R2_nii = make_nii(R2_image(:,:,:), voxel_size origin, datatype, '');
-    R2_nii_or = rri_orient_t1w(R2_nii);
+    R2_nii = make_nii(R2_image(:,:,:), voxel_size, origin, datatype, '');
+    R2_nii_or = rri_orient_no_ui(R2_nii);
     save_nii(R2_nii_or, [folder_name '_R2_map.nii']);
 
 fileout = [folder_name '_log_file.txt']
