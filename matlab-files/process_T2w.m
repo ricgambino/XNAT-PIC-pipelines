@@ -6,7 +6,7 @@
 function process_T2w(input_img_dir,output_img_dir)
 
     % Extract matrix from DICOM files
-    % img_dir=uigetdir('','Select DICOM folder (number) where DWI image is stored');
+    %input_img_dir=uigetdir('','Select DICOM folder (number) where DWI image is stored');
     [pathstr, folder_name] = fileparts(input_img_dir);
 
     Files=dir(fullfile(input_img_dir,'*.dcm'));
@@ -135,11 +135,11 @@ function process_T2w(input_img_dir,output_img_dir)
     saveas(h_t2w_map, [folder_name '_T2w_map.jpg']);
     
     % Save nifti
-    resolution = [fov(1)*10/size_xy(1), fov(2)*10/size_xy(2), slice_thickness(1)];
+    voxel_size = [fov(1)*10/size_xy(1), fov(2)*10/size_xy(2), slice_thickness(1)];
     origin = [0 0 0]; 
     datatype = 64;
     
-    T2w_nii = make_nii(T2w_image(:,:,:), origin, datatype, '');
+    T2w_nii = make_nii(T2w_image(:,:,:), voxel_size, origin, datatype, '');
     T2w_nii_or = rri_orient_t1w(T2w_nii);
     save_nii(T2w_nii_or, [folder_name '_T2w_map.nii']);
 
@@ -155,18 +155,18 @@ function process_T2w(input_img_dir,output_img_dir)
     end
 
     h_r2map = figure('Name', 'R2 map [s]');
-    imshow(R2_image, [0 200]); 
+    imshow(R2_image, [0 5]); 
     axis square;
     colorbar;
     title('R2 map [s]');
     saveas(h_r2map, [folder_name '_R2_map' '.jpg']);
     
     % Save nifti
-    resolution = [fov(1)*10/size_xy(1), fov(2)*10/size_xy(2), slice_thickness(1)];
+    voxel_size = [fov(1)*10/size_xy(1), fov(2)*10/size_xy(2), slice_thickness(1)];
     origin = [0 0 0]; 
     datatype = 64;
     
-    R2_nii = make_nii(R2_image(:,:,:), origin, datatype, '');
+    R2_nii = make_nii(R2_image(:,:,:), voxel_size origin, datatype, '');
     R2_nii_or = rri_orient_t1w(R2_nii);
     save_nii(R2_nii_or, [folder_name '_R2_map.nii']);
 
@@ -178,8 +178,8 @@ if fid<0
 end
 
 fprintf(fid,'----------------------------------------------------------------\n');
-fprintf(fid, 'script: process T2 \n');
-fprintf(fid, 'Authors: Sara Zullino, Alessandro Paglialonga and Dario Longo\n');
+fprintf(fid, 'CIM-XNAT Pipeline: Process T2 weighted images\n');
+fprintf(fid, 'Authors: Sara Zullino, Dario Longo\n');
 fprintf(fid,'----------------------------------------------------------------\n');
 fprintf(fid,'T2 analysis for DICOM files\n');
 fprintf(fid,'1. Extract matrix from DICOM files\n');
