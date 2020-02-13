@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Pipeline xmlns="http://nrg.wustl.edu/pipeline" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nrg.wustl.edu/pipeline ..\schema\pipeline.xsd" xmlns:fileUtils="http://www.xnat.org/java/org.nrg.imagingtools.utils.FileUtils">
+    <name>Process DWI in a project</name>
+    <location>process_DWI_project</location>
+    <description>Pipeline processing DWI diffusion scans.</description>
+    <documentation>
+        <authors>
+            <author>
+                <lastname>Paglialonga</lastname>
+                <firstname>Alessandro</firstname>
+                <contact>
+                	<email>pagli93@gmail.com</email>
+                </contact>
+            </author>
+            <author>
+            	<lastname>Zullino</lastname>
+            	<firstname>Sara</firstname>
+            </author>
+            <author>
+            	<lastname>Longo</lastname>
+            	<firstname>Dario</firstname>
+            </author>
+        </authors>
+    </documentation>
+    <outputFileNamePrefix>^concat(/Pipeline/parameters/parameter[name='logdir']/values/unique/text(),'/',/Pipeline/parameters/parameter[name='label']/values/unique/text())^</outputFileNamePrefix>
+    <loop id="series" xpath="^/Pipeline/parameters/parameter[name='scanids']/values/list^"/>
+    <parameters>
+        <parameter>
+            <name>workdir</name>
+            <values>
+                <unique>^concat(/Pipeline/parameters/parameter[name='builddir']/values/unique/text(),'/',/Pipeline/parameters/parameter[name='label']/values/unique/text())^</unique>
+            </values>
+        </parameter>
+        <parameter>
+            <name>logdir</name>
+            <values>
+                <unique>^concat(/Pipeline/parameters/parameter[name='workdir']/values/unique/text(),'/LOGS')^</unique>
+            </values>
+        </parameter>
+        <parameter>
+            <name>rawdir</name>
+            <values>
+                <unique>^concat(/Pipeline/parameters/parameter[name='workdir']/values/unique/text(),'/RAW')^</unique>
+            </values>
+        </parameter>
+        <parameter>
+            <name>processeddir</name>
+            <values>
+                <unique>^concat(/Pipeline/parameters/parameter[name='workdir']/values/unique/text(),'/PROCESSED')^</unique>
+            </values>
+        </parameter>
+        <parameter>
+            <name>resolved_host</name>
+            <values>
+                <unique>^if(boolean(/Pipeline/parameters/parameter[name='aliasHost'])) then /Pipeline/parameters/parameter[name='aliasHost']/values/unique/text() else /Pipeline/parameters/parameter[name='host']/values/unique/text()^</unique>
+            </values>
+        </parameter>
+    </parameters>
+    <steps>
+        <step id="MKDIR_RAW" description="Create RAW folder">
+            <resource name="mkdir" location="commandlineTools">
+                <argument id="dirname">
+                    <value>^/Pipeline/parameters/parameter[name='rawdir']/values/unique/text()^</value>
+                </argument>
+            </resource>
+        </step>
+        <step id="MKDIR_PROCESSED" description="Create PROCESSED folder">
+            <resource name="mkdir" location="commandlineTools">
+                <argument id="dirname">
+                    <value>^/Pipeline/parameters/parameter[name='processeddir']/values/unique/text()^</value>
+                </argument>
+            </resource>
+        </step>
+        <step id="MKDIR_PROCESSED_SCAN" description="Create folder for each scan in PROCESSED subfolder" workdirectory="^/Pipeline/parameters/parameter[name='processeddir']/values/unique/text()^">
+            <resource name="mkdir" location="commandlineTools">
+                <argument id="dirname">
+                    <value>^PIPELINE_LOOPON(series)^</value>
+                </argument>
+            </resource>
+        </step>
+        <step id="DOWNLOAD_AND_PROCESS" description="Download all DWI scans of the project">
+            <resource name="process_DWI_project_resource" location="process_DWI_project/resource">
+                <argument id="input">
+                    <value>^/Pipeline/parameters/parameter[name='rawdir']/values/unique/text()^</value>
+                </argument>
+                <argument id="output">
+                    <value>^/Pipeline/parameters/parameter[name='processeddir']/values/unique/text()^</value>
+                </argument>
+            </resource>
+        </step>
+    </steps>
+</Pipeline>
+

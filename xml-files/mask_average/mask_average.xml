@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Pipeline xmlns="http://nrg.wustl.edu/pipeline" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nrg.wustl.edu/pipeline ..\schema\pipeline.xsd" xmlns:fileUtils="http://www.xnat.org/java/org.nrg.imagingtools.utils.FileUtils">
+    <name>Mask Average</name>
+    <location>mask_average</location>
+    <description>Pipeline to mask a parametric map and compute mean value in the tumor region</description>
+    <documentation>
+        <authors>
+            <author>
+                <lastname>Zullino</lastname>
+                <firstname>Sara</firstname>
+                <contact>
+                	<email>sara.zullino@unito.it</email>
+                </contact>
+            </author>
+        </authors>
+        <input-parameters>
+            <parameter>
+                <name>anatscanids</name>
+                <values>
+                    <schemalink>xnat:imageSessionData/scans/scan/ID</schemalink>
+                </values>
+                <description>Scan ids of the anatomical scans of the session</description>
+            </parameter>
+            <parameter>
+                <name>paramscanids</name>
+                <values>
+                    <schemalink>xnat:imageSessionData/scans/scan/ID</schemalink>
+                </values>
+                <description>Scan ids of the parametric scans of the session</description>
+            </parameter>
+            <parameter>
+                <name>xnat_id</name>
+                <values>
+                    <schemalink>xnat:imageSessionData/ID</schemalink>
+                </values>
+                <description>XNAT ID (Accession Number) of the session</description>
+            </parameter>
+            <parameter>
+                <name>sessionId</name>
+                <values>
+                    <schemalink>xnat:imageSessionData/label</schemalink>
+                </values>
+                <description>Session label</description>
+            </parameter>
+            <parameter>
+                <name>project</name>
+                <values>
+                    <schemalink>xnat:imageSessionData/project</schemalink>
+                </values>
+                <description>Project ID</description>
+            </parameter>
+            <parameter>
+                <name>subject</name>
+                <values>
+                    <schemalink>xnat:imageSessionData/subject_ID</schemalink>
+                </values>
+                <description>Subject ID</description>
+            </parameter>
+            <parameter>
+                <name>resource</name>
+                <values>
+                    <schemalink>xnat:imageSessionData/resources/resource/label</schemalink> 
+                </values>
+                <description>Resource label</description>
+            </parameter>
+	    <parameter>
+                <name>assessor</name>
+                <values>
+                    <schemalink>xnat:imageSessionData/assessors/assessor/label</schemalink>
+                </values>
+                <description>Assessor label</description>
+            </parameter>
+
+        </input-parameters>
+    </documentation>
+    <outputFileNamePrefix>^concat(/Pipeline/parameters/parameter[name='logdir']/values/unique/text(),'/',/Pipeline/parameters/parameter[name='label']/values/unique/text())^</outputFileNamePrefix>
+    <loop id="series" xpath="^/Pipeline/parameters/parameter[name='anatscanids']/values/list^"/>
+    <parameters>
+        <parameter>
+            <name>workdir</name>
+            <values>
+                <unique>^concat(/Pipeline/parameters/parameter[name='builddir']/values/unique/text(),'/',/Pipeline/parameters/parameter[name='label']/values/unique/text())^</unique>
+            </values>
+        </parameter>
+        <parameter>
+            <name>logdir</name>
+            <values>
+                <unique>^concat(/Pipeline/parameters/parameter[name='workdir']/values/unique/text(),'/LOGS')^</unique>
+            </values>
+        </parameter>
+        <parameter>
+            <name>rawdir</name>
+            <values>
+                <unique>^concat(/Pipeline/parameters/parameter[name='workdir']/values/unique/text(),'/RAW')^</unique>
+            </values>
+        </parameter>
+        <parameter>
+            <name>processeddir</name>
+            <values>
+                <unique>^concat(/Pipeline/parameters/parameter[name='workdir']/values/unique/text(),'/PROCESSED')^</unique>
+            </values>
+        </parameter>
+        <parameter>
+            <name>resolved_host</name>
+            <values>
+                <unique>^if(boolean(/Pipeline/parameters/parameter[name='aliasHost'])) then /Pipeline/parameters/parameter[name='aliasHost']/values/unique/text() else /Pipeline/parameters/parameter[name='host']/values/unique/text()^</unique>
+            </values>
+        </parameter>
+    </parameters>
+    <steps>
+        <step id="MKDIR_RAW" description="Create RAW folder">
+            <resource name="mkdir" location="commandlineTools">
+                <argument id="dirname">
+                    <value>^/Pipeline/parameters/parameter[name='rawdir']/values/unique/text()^</value>
+                </argument>
+            </resource>
+        </step>
+        <step id="MKDIR_RAW_SCAN" description="Create folder for each scan in RAW subfolder" workdirectory="^/Pipeline/parameters/parameter[name='rawdir']/values/unique/text()^">
+            <resource name="mkdir" location="commandlineTools">
+                <argument id="dirname">
+                    <value>^PIPELINE_LOOPON(series)^</value>
+                </argument>
+            </resource>
+        </step>
+        <step id="MKDIR_PROCESSED" description="Create PROCESSED folder">
+            <resource name="mkdir" location="commandlineTools">
+                <argument id="dirname">
+                    <value>^/Pipeline/parameters/parameter[name='processeddir']/values/unique/text()^</value>
+                </argument>
+            </resource>
+        </step>
+<!--        <step id="MKDIR_PROCESSED_SCAN" description="Create folder for each scan in PROCESSED subfolder" workdirectory="^/Pipeline/parameters/parameter[name='processeddir']/values/unique/text()^">
+            <resource name="mkdir" location="commandlineTools">
+                <argument id="dirname">
+                    <value>^PIPELINE_LOOPON(series)^</value>
+                </argument>
+            </resource>
+        </step> -->
+	<step id="GET_SCANS" description="Download scan DICOMs" workdirectory="^concat(/Pipeline/parameters/parameter[name='rawdir']/values/unique/text(),'/',PIPELINE_LOOPON(series))^">
+            <resource name="XnatDataClient" location="xnat_tools">
+                <argument id="sessionId">
+                    <value>^fileUtils:getJSESSION('DUMMY')^</value>
+                </argument>
+                <argument id="absolutePath"/>
+                <argument id="batch"/>
+                <argument id="method">
+                    <value>GET</value>
+                </argument>
+                <argument id="remote">
+                    <value>^concat('"',/Pipeline/parameters/parameter[name='resolved_host']/values/unique/text(),'/data/experiments/',/Pipeline/parameters/parameter[name='id']/values/unique/text(),'/scans/',PIPELINE_LOOPON(series),'/resources/DICOM/files"')^</value>
+                </argument>
+            </resource>
+        </step>
+        <step id="GET_ASSESSORS" description="Download ASSESSORS" workdirectory="^/Pipeline/parameters/parameter[name='rawdir']/values/unique/text()^">
+            <resource name="XnatDataClient" location="xnat_tools">
+                <argument id="sessionId">
+                    <value>^fileUtils:getJSESSION('DUMMY')^</value>
+                </argument>
+                <argument id="absolutePath"/>
+                <argument id="batch"/>
+                <argument id="method">
+                    <value>GET</value>
+                </argument>
+                <argument id="remote">
+		    <value>^concat(/Pipeline/parameters/parameter[name='resolved_host']/values/unique/text(),'/data/projects','/',Pipeline/parameters/parameter[name='project']/values/unique/text(),'/subjects','/',Pipeline/parameters/parameter[name='subject']/values/unique/text(),'/experiments','/',/Pipeline/parameters/parameter[name='id']/values/unique/text(),'/assessors','/',/Pipeline/parameters/parameter[name='assessor']/values/unique/text(),'/RTSTRUCT/files')^</value>
+                </argument>
+            </resource>
+        </step>
+	<step id="GET_RESOURCES" description="Download RESOURCES" workdirectory="^/Pipeline/parameters/parameter[name='rawdir']/values/unique/text()^">
+            <resource name="XnatDataClient" location="xnat_tools">
+                <argument id="sessionId">
+                    <value>^fileUtils:getJSESSION('DUMMY')^</value>
+                </argument>
+                <argument id="absolutePath"/>
+                <argument id="batch"/>
+                <argument id="method">
+                    <value>GET</value>
+                </argument>
+                <argument id="remote">
+                <!--    <value>^concat(/Pipeline/parameters/parameter[name='resolved_host']/values/unique/text(),'/data/projects','/',Pipeline/parameters/parameter[name='project']/values/unique/text(),'/subjects','/',/Pipeline/parameters/parameter[name='subject']/values/unique/text(),'/resources','/',/Pipeline/parameters/parameter[name='resource']/values/unique/text(),'/files')^</value>-->
+		<!-- <value>^concat('"',/Pipeline/parameters/parameter[name='resolved_host']/values/unique/text(),'/data/experiments/',/Pipeline/parameters/parameter[name='id']/values/unique/text(),'/resources/PROCESSED_T2w/files"')^</value> -->
+                <value>^concat('"',/Pipeline/parameters/parameter[name='resolved_host']/values/unique/text(),'/data/experiments/',/Pipeline/parameters/parameter[name='id']/values/unique/text(),'/scans/',/Pipeline/parameters/parameter[name='paramscanids']/values/unique/text(),'/resources/PROCESSED_T2w/files"')^</value>
+
+                </argument>
+            </resource>
+        </step>
+        <step id="PROCESS" description="Mask Average">
+            <resource name="mask_average_resource" location="mask_average/resource">
+                <argument id="input">
+                    <value>^/Pipeline/parameters/parameter[name='rawdir']/values/unique/text()^</value>
+                </argument>
+                <argument id="output">
+                    <value>^/Pipeline/parameters/parameter[name='processeddir']/values/unique/text()^</value>
+                </argument>
+            </resource>
+        </step>
+         <step id="UPLOAD" description="Upload Processed files">
+            <resource name="XnatDataClient" location="xnat_tools">
+                <argument id="sessionId">
+                    <value>^fileUtils:getJSESSION('DUMMY')^</value>
+                </argument>
+                <argument id="method">
+                    <value>PUT</value>
+                </argument>
+                <argument id="remote">
+			<value>^concat('"',/Pipeline/parameters/parameter[name='resolved_host']/values/unique/text(),'/data/experiments/',/Pipeline/parameters/parameter[name='id']/values/unique/text(),'/scans/',/Pipeline/parameters/parameter[name='paramscanids']/values/unique/text(),'/resources/ANALYSED/files?overwrite=true&amp;format=jpg&amp;content=jpg&amp;reference=',/Pipeline/parameters/parameter[name='processeddir']/values/unique/text(),'/','&amp;event_id=',/Pipeline/parameters/parameter[name='workflowid']/values/unique/text(),'"')^</value>
+                </argument>
+            </resource>
+        </step>
+    </steps>
+</Pipeline>
+
