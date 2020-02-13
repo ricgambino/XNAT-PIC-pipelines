@@ -8,7 +8,7 @@ Created on Tue Jan  31 16:38:12 2020
 """
 Usage
 
-tumor_masking('/path/to/T2w/NifTi/file.nii', '/path/to/mask/NifTi/file.nii', '/output/path')
+mask_average('/path/to/T2w/NifTi/file.nii', '/path/to/mask/NifTi/file.nii', '/output/path')
 
 """
 import os
@@ -25,7 +25,7 @@ first_arg=sys.argv[1]
 second_arg=sys.argv[2]
 third_arg=sys.argv[3]
 
-def tumor_masking(input_T2w_file , input_mask_file, output_dir):
+def mask_average(input_T2w_file , input_mask_file, output_dir):
 
     try:
 
@@ -131,4 +131,4 @@ def tumor_masking(input_T2w_file , input_mask_file, output_dir):
         sys.exit(1)
 
 if __name__=='__main__':
-    tumor_masking(first_arg,second_arg,third_arg)    
+    mask_average(first_arg,second_arg,third_arg)    
