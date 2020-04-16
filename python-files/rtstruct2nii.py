@@ -18,6 +18,7 @@ from dcmrtstruct2nii import dcmrtstruct2nii, list_rt_structs
 from dcmrtstruct2nii import dcmrtstruct2nii
 import sys
 import os
+import glob
 import traceback
 import gzip, shutil
 
@@ -36,7 +37,11 @@ def rtstruct2nii(rtstruct_file, original_dcm, output_path):
         traceback.print_tb(exc_traceback)
         sys.exit(1)
     try:
-        with gzip.open(os.path.join(output_path,'mask_tumor.nii.gz'), 'r') as f_in, open(os.path.join(output_path,'mask_tumor.nii'), 'wb') as f_out:
+        os.chdir(output_path)
+        for file in glob.glob("mask*.gz"): 
+            print(file)
+        mask_nii_gz  = file 
+        with gzip.open(os.path.join(output_path, mask_nii_gz), 'r') as f_in, open(os.path.join(output_path,'mask_tumor.nii'), 'wb') as f_out:
             shutil.copyfileobj(f_in, f_out)
     except Exception as error:
         print(error)
