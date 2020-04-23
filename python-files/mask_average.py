@@ -115,13 +115,13 @@ def mask_average(input_T2w_file , input_mask_file, output_dir):
             f.write("Apply mask to a parametric map and compute mean value in the tumor region\n")
             f.write("Author: Sara Zullino \n") 
             f.write("----------------------------------------------------------------------------- \n") 
-            print("ROI Area: {:0.2f} s".format(roi_area), file=f)
+            print("ROI Area: {:0.2f} ".format(roi_area), file=f)
             print("Mean T2: {:0.2f} s".format(mean_T2), file=f) 
-            print("STD T2: {:0.2f} ".format(std_T2,2), file=f) 
+            print("STD T2: {:0.2f} s".format(std_T2,2), file=f) 
             print("Median T2: {:0.2f} s".format(median_T2), file=f) 
             print("Mean R2: {:0.2f} 1/s ".format(mean_R2,2), file=f) 
-            print("STD R2: {:0.2f} ".format(std_R2,2), file=f) 
-            print("Median R2: {:0.2f} s".format(median_R2), file=f) 
+            print("STD R2: {:0.2f} 1/s".format(std_R2,2), file=f) 
+            print("Median R2: {:0.2f} 1/s".format(median_R2), file=f) 
             f.close()
 
     except Exception as e:
