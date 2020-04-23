@@ -40,10 +40,6 @@ def mask_average(input_T2w_file , input_mask_file, output_dir):
         T2w_img_orientation = nib.aff2axcodes(canonical_T2w_image.affine)
         T2w_image_data = T2w_image.get_fdata()
 
-        # Remove all occurrences of elements greater than 5 and lower than 0 
-        T2w_image_data[T2w_image_data < 0] = 0
-        T2w_image_data[T2w_image_data > 5] = 0
-
         # Figure
         T2w_img_plot = plt.imshow(T2w_image_data,cmap='gray')
         plt.colorbar()
