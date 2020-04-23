@@ -40,19 +40,6 @@ def mask_average(input_T2w_file , input_mask_file, output_dir):
         T2w_img_orientation = nib.aff2axcodes(canonical_T2w_image.affine)
         T2w_image_data = T2w_image.get_fdata()
 
-        # Remove outliers 
-        #T2w_image_data[T2w_image_data < 0] = 0
-        #T2w_image_data[T2w_image_data > 5] = 0
-
-        # Figure
-        T2w_img_plot = plt.imshow(T2w_image_data,cmap='gray')
-        plt.colorbar()
-        #plt.clim(0, 2)
-        plt.title('T2w map [s]')
-        plt.savefig('T2w_map.png')
-        plt.clf()  
-        plt.close()  
-
         # Load mask image
         mask_image = nib.load(input_mask_file)
         mask_image.affine.shape
@@ -65,15 +52,6 @@ def mask_average(input_T2w_file , input_mask_file, output_dir):
         mask_image_data = mask_image.get_fdata()
         mask_image = mask_image_data[:,:,0]
 
-        # Figure
-        mask_img_plot = plt.imshow(mask_image,cmap='gray')
-        plt.colorbar()
-        plt.clim(0, 1)
-        plt.title('mask') 
-        plt.savefig('mask.png')
-        plt.clf()  
-        plt.close() 
-
         # Check image orientation
         #if mask_img_orientation != T2w_img_orientation:
             
@@ -83,10 +61,56 @@ def mask_average(input_T2w_file , input_mask_file, output_dir):
             mask_image_resized = cv2.resize(mask_image_bin, dsize=(size_x_T2w, size_y_T2w), interpolation=cv2.INTER_LINEAR)
             mask_image_resized_int = (mask_image_resized != 0).astype(int)
             plt.imshow(mask_image_resized_int,cmap='gray')
-            
+          
+        # Remove outliers
+        T2w_nonzero_image_data_array = T2w_image_data[T2w_image_data>0]
+        
+        mean_T2_image_data = T2w_nonzero_image_data_array.mean()
+        std_T2_image_data = T2w_nonzero_image_data_array.std()
+        
+        lower_limit = mean_T2_image_data - 2 * std_T2_image_data
+        if lower_limit < 0: # negative values have no phisical meaning
+            lower_limit = 0
+        upper_limit = mean_T2_image_data + 2 * std_T2_image_data
+        
+        T2w_image_data[T2w_image_data > upper_limit] = 0
+        T2w_image_data[T2w_image_data < lower_limit] = 0
+    
         # applying multiply method 
         T2w_image = np.asarray(T2w_image_data, dtype=None, order=None)
         T2w_image_masked = cv2.multiply(T2w_image, mask_image_resized_int,dtype=cv2.CV_32F)
+         
+        T2w_image_mask_nonzero_array = T2w_image_masked[T2w_image_masked>0]
+        mean_T2 = T2w_image_mask_nonzero_array.mean()
+        std_T2 = T2w_image_mask_nonzero_array.std()
+        median_T2 = np.median(T2w_image_mask_nonzero_array)       
+        
+        print("T2w_nonzero_image_data_array max is" , np.amax(T2w_nonzero_image_data_array))
+        print("T2w_nonzero_image_data_array min is", np.amin(T2w_nonzero_image_data_array))
+        print("T2w_image_mask_nonzero_array max is" , np.amax(T2w_image_mask_nonzero_array))
+        print("T2w_image_mask_nonzero_array min is", np.amin(T2w_image_mask_nonzero_array))
+
+        print("Lower limit" , lower_limit)
+        print("Upper limit" , upper_limit)
+        
+        R2_image_mask_nonzero_array = 1/T2w_image_mask_nonzero_array
+        mean_R2 = R2_image_mask_nonzero_array.mean()
+        std_R2 = R2_image_mask_nonzero_array.std()
+        median_R2 = np.median(R2_image_mask_nonzero_array)
+        
+        # Count the number of nonzero pixels in the thresholded image
+        roi_area = cv2.countNonZero(mask_image_resized_int)
+
+        # Figure
+        plt.imshow(T2w_image_data,cmap='gray')
+        plt.colorbar()
+        #plt.clim(0, 2)
+        plt.title('T2w map [s]')
+        plt.savefig('T2w_map.png')
+        plt.clf()  
+        plt.close() 
+        
+        # Figure        
         plt.imshow(T2w_image_masked,cmap='gray')
         plt.colorbar()
         #plt.clim(0, 2)
@@ -95,18 +119,15 @@ def mask_average(input_T2w_file , input_mask_file, output_dir):
         plt.clf()  
         plt.close()
 
-        # Count the number of nonzero pixels in the thresholded image
-        roi_area = cv2.countNonZero(mask_image_resized_int)
-
-        T2w_nonzero_array = T2w_image_masked[T2w_image_masked>0]
-        mean_T2 = T2w_nonzero_array.mean()
-        std_T2 = T2w_nonzero_array.std()
-        median_T2 = np.median(T2w_nonzero_array)
-
-        R2_nonzero_array = 1/T2w_nonzero_array
-        mean_R2 = R2_nonzero_array.mean()
-        std_R2 = R2_nonzero_array.std()
-        median_R2 = np.median(R2_nonzero_array)
+        
+        # Figure
+        plt.imshow(mask_image,cmap='gray')
+        plt.colorbar()
+        plt.clim(0, 1)
+        plt.title('mask') 
+        plt.savefig('mask.png')
+        plt.clf()  
+        plt.close() 
 
 
         with open("statistics.txt", "w+") as f:
