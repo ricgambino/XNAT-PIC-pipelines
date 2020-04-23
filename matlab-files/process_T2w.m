@@ -19,7 +19,7 @@ function process_T2w(input_img_dir,output_img_dir)
 
     %% Look for DICOM tags needed for processing
 
-    size_x = size(image,1)
+    size_x = size(image,1);
     size_y = size(image,2)
     nFrames = size(image,3)     % The number of files in the directory
     size_xy = [size_x size_y];
@@ -128,7 +128,7 @@ function process_T2w(input_img_dir,output_img_dir)
     
     % T2 map figure
     h_t2w_map = figure('Name', 'T2w map [ms]');
-    T2w_map = imshow(T2w_image, [0 5]);
+    T2w_map = imshow(T2w_image, []);
     axis square   
     colorbar
     title('T2w map [ms]')
@@ -155,7 +155,7 @@ function process_T2w(input_img_dir,output_img_dir)
     end
 
     h_r2map = figure('Name', 'R2 map [s]');
-    imshow(R2_image, [0 5]); 
+    R2_map = imshow(R2_image, []); 
     axis square;
     colorbar;
     title('R2 map [s]');
