@@ -40,10 +40,14 @@ def mask_average(input_T2w_file , input_mask_file, output_dir):
         T2w_img_orientation = nib.aff2axcodes(canonical_T2w_image.affine)
         T2w_image_data = T2w_image.get_fdata()
 
+        # Remove outliers 
+        #T2w_image_data[T2w_image_data < 0] = 0
+        #T2w_image_data[T2w_image_data > 5] = 0
+
         # Figure
         T2w_img_plot = plt.imshow(T2w_image_data,cmap='gray')
         plt.colorbar()
-        plt.clim(0, 2)
+        #plt.clim(0, 2)
         plt.title('T2w map [s]')
         plt.savefig('T2w_map.png')
         plt.clf()  
@@ -85,7 +89,7 @@ def mask_average(input_T2w_file , input_mask_file, output_dir):
         T2w_image_masked = cv2.multiply(T2w_image, mask_image_resized_int,dtype=cv2.CV_32F)
         plt.imshow(T2w_image_masked,cmap='gray')
         plt.colorbar()
-        plt.clim(0, 2)
+        #plt.clim(0, 2)
         plt.title('T2w map masked [s]')
         plt.savefig('T2w_map_masked.png')
         plt.clf()  
