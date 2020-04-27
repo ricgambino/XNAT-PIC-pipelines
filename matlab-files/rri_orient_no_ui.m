@@ -13,7 +13,7 @@ function [nii, orient, pattern] = rri_orient_no_ui(nii, varargin)
       pattern = [];
    end
 
-   orient = [1 2 3]
+   %orient = [1 2 3]
    dim = double(nii.hdr.dime.dim([2:4]));
 
    if ~isempty(pattern) & ~isequal(length(pattern), prod(dim))
@@ -23,7 +23,7 @@ function [nii, orient, pattern] = rri_orient_no_ui(nii, varargin)
    %  get orient of the current image
    %
    %orient = rri_orient_ui; 
-   %orient = [2 1 3]
+   orient = [2 1 3]
    pause(.1);
 
    %  no need for conversion
