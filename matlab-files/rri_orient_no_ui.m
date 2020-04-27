@@ -5,7 +5,7 @@
 %  Jimmy Shen (jimmy@rotman-baycrest.on.ca), 26-APR-04
 %___________________________________________________________________
 
-function [nii, orient, pattern] = rri_orient_t1w(nii, varargin)
+function [nii, orient, pattern] = rri_orient_no_ui(nii, varargin)
 
    if nargin > 1
       pattern = varargin{1};
