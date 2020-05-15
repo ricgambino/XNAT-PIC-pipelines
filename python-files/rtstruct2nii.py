@@ -40,9 +40,11 @@ def rtstruct2nii(rtstruct_file, original_dcm, output_path):
         os.chdir(output_path)
         for file in glob.glob("mask*.gz"): 
             print(file)
-        mask_nii_gz  = file 
-        with gzip.open(os.path.join(output_path, mask_nii_gz), 'r') as f_in, open(os.path.join(output_path,'mask_tumor.nii'), 'wb') as f_out:
-            shutil.copyfileobj(f_in, f_out)
+            mask_nii_gz  = file 
+            mask_nii = os.path.splitext(mask_nii_gz)[0]
+            print(mask_nii)
+            with gzip.open(os.path.join(output_path, mask_nii_gz), 'r') as f_in, open(os.path.join(output_path, mask_nii), 'wb') as f_out:
+                shutil.copyfileobj(f_in, f_out)
     except Exception as error:
         print(error)
         exc_type, exc_value, exc_traceback = sys.exc_info()
