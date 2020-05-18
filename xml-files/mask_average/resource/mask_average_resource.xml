@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Resource xmlns="http://nrg.wustl.edu/pipeline">
-	<name>./run.sh</name>
+	<name>./run_mask_average.sh</name>
 	<location>/home/xnat/pipeline/xnat-pipeline-engine/templates/scripts/mask_average/</location>
 	<type>Executable</type>
 	<description>Mask parametric maps and compute mean value</description>
