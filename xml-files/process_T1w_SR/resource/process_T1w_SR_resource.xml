@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Resource xmlns="http://nrg.wustl.edu/pipeline">
-	<name>./runv2.sh</name>
+	<name>./run_process_T1w_SR.sh</name>
 	<location>/home/xnat/pipeline/xnat-pipeline-engine/templates/scripts/process_T1w_SR/</location>
 	<type>Executable</type>
 	<description>Process T1w Sat Rec scans</description>
