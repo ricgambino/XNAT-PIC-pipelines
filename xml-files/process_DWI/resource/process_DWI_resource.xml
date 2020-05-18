@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Resource xmlns="http://nrg.wustl.edu/pipeline">
-	<name>./runv2.sh</name>
+	<name>./run_process_dwi.sh</name>
 	<location>/home/xnat/pipeline/xnat-pipeline-engine/templates/scripts/process_DWI/</location>
 	<type>Executable</type>
 	<description>Process DWI scans</description>
