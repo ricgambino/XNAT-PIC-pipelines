@@ -18,7 +18,7 @@ first_arg = sys.argv[1]
 second_arg = sys.argv[2]
 
 ## default values are specified in order to test it without launching the pipeline on XNAT.
-def process_EPI_project(
+def process_DWI_project(
     build_dir="/data/xnat/build/MITIGATE/20190620_222403/lc_41_IMA_T1_UNTREATED_PRE/RAW",
     output_dir="/data/xnat/build/MITIGATE/20190620_222403/lc_41_IMA_T1_UNTREATED_PRE/PROCESSED",
 ):
@@ -32,5 +32,5 @@ def process_EPI_project(
 
 if __name__ == "__main__":
     
-    process_EPI_project(first_arg, second_arg)
-    #process_EPI_project() ## To launch debugging
+    process_DWI_project(first_arg, second_arg)
+    #process_DWI_project() ## To launch debugging
