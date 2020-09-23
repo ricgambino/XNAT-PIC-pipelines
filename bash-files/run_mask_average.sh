@@ -32,7 +32,7 @@ echo $output > "/home/xnat/output.txt"
 
 /home/xnat/anaconda3/bin/python3 /home/xnat/pipeline/xnat-pipeline-engine/templates/scripts/mask_average/rtstruct2nii.py "$rtstruct_file_path" "$original_dcm_path" "$output"
 
-mask_tumor_path=$(find $output -type f -name "mask_tumor.nii")
+mask_tumor_path=$(find $output -type f -name "mask_*.nii")
 echo "Mask tumor path is $mask_tumor_path"
 
 T2w_map_path=$(find $input -type f -name "*T2w_map.nii")
