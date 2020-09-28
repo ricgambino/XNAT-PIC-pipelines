@@ -37,7 +37,7 @@ def REST_XNAT_Getscans_bytype(download_info, path):
             
             #new_url='/project/'+download_info[j]["Project"]+'/subject/'+download_info[j]["Subject ID"]+'/experiments/'+download_info[j]["Session ID"]+scans+resources
             
-            r = requests.get(serverurl, auth=("admin", "xnatunito19"))
+            r = requests.get(serverurl, auth=("admin", "xn@t4cim2020"))
             #scans=central.get(new_url)
             
             #filename = path + "/archive" + str(j) + ".zip"
