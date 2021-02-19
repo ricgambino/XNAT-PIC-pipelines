@@ -59,7 +59,7 @@ def process_scans(download_info, path):
                     + download_info[j]["Scan ID"],
                     nargout=0,
                 )
-		elif download_info[j]["Scan Type"] == ['MSME-T2-map in vivo short']:
+		elif download_info[j]["Scan Type"] == ['MSME-T2-map in vivo']:
                     eng.process_T2w(
                     scan_dirs,
                     download_info[j]["Subject Folder"]

@@ -147,7 +147,7 @@ function process_T2w(input_img_dir,output_img_dir)
     for i=1:size_y 
         for j=1:size_x  
             if seg_img(i,j,1)>0 
-                R2_image(i,j) = (T2w_image(i,j))^-1; 
+                R2_image(i,j) = (T2w_image(i,j)/1000)^-1; 
             else
                 R2_image(i,j) = 0; 
             end
