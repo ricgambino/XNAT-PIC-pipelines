@@ -9,7 +9,7 @@ Created on Tue May 19 16:21:06 2020
 """
 Usage
 
-mask_average('/path/to/T2w/NifTi/file.nii', '/path/to/mask/NifTi/file.nii', '/output/path')
+mask_average('/path/to/T2/NifTi/file.nii', '/path/to/mask/NifTi/file.nii', '/output/path')
 
 """
 import os
@@ -111,7 +111,7 @@ def mask_average(input_param_file , input_mask_file, output_dir):
             with open("statistics.txt", "w+") as f:        
                 f.write("***************************************************************************** \n")
                 f.write("XNAT-PIC Pipeline: Mask Average\n") 
-                f.write("Apply a mask to a parametric map and compute mean value in the tumor region\n")
+                f.write("Apply a mask to a parametric map and compute mean value in the ROIs\n")
                 f.write("\n")
                 f.write("Author: Sara Zullino \n")
                 f.write("Mailto: sara.zullino@unito.it \n")    
@@ -138,7 +138,7 @@ def mask_average(input_param_file , input_mask_file, output_dir):
                     print("param_image_mask_nonzero_array max is" , np.amax(param_image_mask_nonzero_array))
                     print("param_image_mask_nonzero_array min is", np.amin(param_image_mask_nonzero_array))    
                 
-                    R2_image_mask_nonzero_array = 1/param_image_mask_nonzero_array
+                    R2_image_mask_nonzero_array = 1000/param_image_mask_nonzero_array
                     mean_R2 = R2_image_mask_nonzero_array.mean()
                     std_R2 = R2_image_mask_nonzero_array.std()
                     median_R2 = np.median(R2_image_mask_nonzero_array)
@@ -149,9 +149,9 @@ def mask_average(input_param_file , input_mask_file, output_dir):
                     print("ROI number: {}".format(i+1), file=f)
                     print("ROI file name: %s" % str(os.path.basename(mask_files[i])), file=f)
                     print("ROI Area: {:0.2f} ".format(roi_area), file=f)
-                    print("Mean T2: {:0.2f} s".format(mean_T2), file=f) 
-                    print("STD T2: {:0.2f} s".format(std_T2,2), file=f) 
-                    print("Median T2: {:0.2f} s".format(median_T2), file=f) 
+                    print("Mean T2: {:0.2f} ms".format(mean_T2), file=f) 
+                    print("STD T2: {:0.2f} ms".format(std_T2,2), file=f) 
+                    print("Median T2: {:0.2f} ms".format(median_T2), file=f) 
                     print("Mean R2: {:0.2f} 1/s ".format(mean_R2,2), file=f) 
                     print("STD R2: {:0.2f} 1/s".format(std_R2,2), file=f) 
                     print("Median R2: {:0.2f} 1/s".format(median_R2), file=f) 
@@ -212,7 +212,7 @@ def mask_average(input_param_file , input_mask_file, output_dir):
                 with open("statistics.txt", "w+") as f:        
                     f.write("***************************************************************************** \n")
                     f.write("XNAT-PIC Pipeline: Mask Average\n") 
-                    f.write("Apply a mask to a parametric map and compute mean value in the tumor region\n")
+                    f.write("Apply a mask to a parametric map and compute mean value in the ROIs\n")
                     f.write("\n")
                     f.write("Author: Sara Zullino \n")
                     f.write("Mailto: sara.zullino@unito.it \n")    
@@ -238,7 +238,7 @@ def mask_average(input_param_file , input_mask_file, output_dir):
                         print("param_image_mask_nonzero_array max is" , np.amax(param_image_mask_nonzero_array))
                         print("param_image_mask_nonzero_array min is", np.amin(param_image_mask_nonzero_array))
                              
-                        R2_image_mask_nonzero_array = 1/param_image_mask_nonzero_array
+                        R2_image_mask_nonzero_array = 1000/param_image_mask_nonzero_array
                         mean_R2 = R2_image_mask_nonzero_array.mean()
                         std_R2 = R2_image_mask_nonzero_array.std()
                         median_R2 = np.median(R2_image_mask_nonzero_array)
@@ -249,9 +249,9 @@ def mask_average(input_param_file , input_mask_file, output_dir):
                         print("ROI number: {}".format(i+1), file=f)
                         print("ROI file name: %s" % str(os.path.basename(mask_files[i])), file=f)
                         print("ROI Area: {:0.2f} ".format(roi_area), file=f)
-                        print("Mean T2: {:0.2f} s".format(mean_T2), file=f) 
-                        print("STD T2: {:0.2f} s".format(std_T2,2), file=f) 
-                        print("Median T2: {:0.2f} s".format(median_T2), file=f) 
+                        print("Mean T2: {:0.2f} ms".format(mean_T2), file=f) 
+                        print("STD T2: {:0.2f} ms".format(std_T2,2), file=f) 
+                        print("Median T2: {:0.2f} ms".format(median_T2), file=f) 
                         print("Mean R2: {:0.2f} 1/s ".format(mean_R2,2), file=f) 
                         print("STD R2: {:0.2f} 1/s".format(std_R2,2), file=f) 
                         print("Median R2: {:0.2f} 1/s".format(median_R2), file=f) 
