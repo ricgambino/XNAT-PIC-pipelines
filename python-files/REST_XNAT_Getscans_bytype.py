@@ -12,6 +12,22 @@ from zipfile import ZipFile
 import shutil
 from pyxnat import Interface
 
+path = os.path.expanduser("~") + "/Documents/.central.cfg"
+f = open(path, "r") 
+string = f.read()
+f.close()
+
+u = string.split(",")[1]
+u2 = u.split(":")[1]
+u3 = u2.strip(" ")
+user = u3.strip('\"')
+
+p = string.split(",")[2]
+p2 = p.split(":")[1]
+p3 = p2.strip(" ")
+p4 = p3.split("}")[0]
+password = p4.strip('\"')
+
 def REST_XNAT_Getscans_bytype(download_info, path):
     url = "http://localhost:8080/data/projects/"
     resources = (
@@ -37,7 +53,7 @@ def REST_XNAT_Getscans_bytype(download_info, path):
             
             #new_url='/project/'+download_info[j]["Project"]+'/subject/'+download_info[j]["Subject ID"]+'/experiments/'+download_info[j]["Session ID"]+scans+resources
             
-            r = requests.get(serverurl, auth=("admin", "xn@t4cim2020"))
+            r = requests.get(serverurl, auth=(user, password))
             #scans=central.get(new_url)
             
             #filename = path + "/archive" + str(j) + ".zip"
