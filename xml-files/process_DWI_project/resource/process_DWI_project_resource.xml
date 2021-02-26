@@ -4,7 +4,7 @@
 	<name>./process_DWI_project.py</name>
 	<location>/home/xnat/pipeline/xnat-pipeline-engine/templates/scripts/process_DWI/</location>
 	<type>Executable</type>
-	<description>Download DWI scans</description>
+	<description>Process DWI maps in a project</description>
 	<input>
 		<argument id="input"/>
 		<argument id="output"/>
