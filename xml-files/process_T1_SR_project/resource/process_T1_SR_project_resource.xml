@@ -4,7 +4,7 @@
 	<name>./process_T1_SR_project.py</name>
 	<location>/home/xnat/pipeline/xnat-pipeline-engine/templates/scripts/process_T1_SR/</location>
 	<type>Executable</type>
-	<description>Process T1 Sat Rec maps</description>
+	<description>Process T1 Sat Rec maps in a project</description>
 	<input>
 		<argument id="input"/>
 		<argument id="output"/>

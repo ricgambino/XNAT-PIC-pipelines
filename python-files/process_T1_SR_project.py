@@ -18,7 +18,7 @@ first_arg = sys.argv[1]
 second_arg = sys.argv[2]
 
 ## default values are specified in order to test it without launching the pipeline on XNAT.
-def process_T1w_SR_project(
+def process_T1_SR_project(
     build_dir="/data/xnat/build/",
     output_dir="/data/xnat/build/PROCESSED",
 ):
@@ -27,11 +27,11 @@ def process_T1w_SR_project(
     download_info = download_project_scans_of_type(build_dir, output_dir, scan_type)
     REST_XNAT_Getscans_bytype(download_info, build_dir)
     process_scans(download_info, build_dir)
-    xnat_folder = "PROCESSED_T1w_SR"
+    xnat_folder = "PROCESSED_T1_SR"
     upload_XNAT_files(download_info, build_dir, xnat_folder)
 
 
 if __name__ == "__main__":
     
-    process_T1w_SR_project(first_arg, second_arg)
+    process_T1_SR_project(first_arg, second_arg)
  
