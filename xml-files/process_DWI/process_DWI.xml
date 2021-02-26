@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Pipeline xmlns="http://nrg.wustl.edu/pipeline" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nrg.wustl.edu/pipeline ..\schema\pipeline.xsd" xmlns:fileUtils="http://www.xnat.org/java/org.nrg.imagingtools.utils.FileUtils">
-    <name>Process DWI</name>
+    <name>Process DWI map</name>
     <location>process_DWI</location>
-    <description>Pipeline processing DWI diffusion scans.</description>
+    <description>Pipeline processing DWI map</description>
     <documentation>
         <authors>
             <author>
