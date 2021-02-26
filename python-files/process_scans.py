@@ -71,7 +71,7 @@ def process_scans(download_info, path):
                     nargout=0,
                 )
                 elif download_info[j]["Scan Type"] == ['RARE-T1 map vivo MTX64']:
-                    eng.process_T1w_SR(
+                    eng.process_T1_SR(
                     scan_dirs,
                     download_info[j]["Subject Folder"]
                     + "/"

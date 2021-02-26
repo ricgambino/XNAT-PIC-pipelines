@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Pipeline xmlns="http://nrg.wustl.edu/pipeline" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nrg.wustl.edu/pipeline ..\schema\pipeline.xsd" xmlns:fileUtils="http://www.xnat.org/java/org.nrg.imagingtools.utils.FileUtils">
-    <name>Process T1w Sat Rec in a project</name>
-    <location>process_T1w_SR_project</location>
-    <description>Pipeline processing T1w Sat Rec scans.</description>
+    <name>Process T1 Sat Rec map in a project</name>
+    <location>process_T1_SR_project</location>
+    <description>Pipeline processing T1 Sat Rec maps.</description>
     <documentation>
         <authors>
             <author>
@@ -79,8 +79,8 @@
                 </argument>
             </resource>
         </step>
-        <step id="DOWNLOAD_AND_PROCESS" description="Download all T1w Sat Rec scans of the project">
-            <resource name="process_T1w_SR_project_resource" location="process_T1w_SR_project/resource">
+        <step id="DOWNLOAD_AND_PROCESS" description="Download all T1 Sat Rec scans of the project">
+            <resource name="process_T1_SR_project_resource" location="process_T1_SR_project/resource">
                 <argument id="input">
                     <value>^/Pipeline/parameters/parameter[name='rawdir']/values/unique/text()^</value>
                 </argument>
