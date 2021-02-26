@@ -3,7 +3,7 @@
 <Pipeline xmlns="http://nrg.wustl.edu/pipeline" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nrg.wustl.edu/pipeline ..\schema\pipeline.xsd" xmlns:fileUtils="http://www.xnat.org/java/org.nrg.imagingtools.utils.FileUtils">
     <name>Mask Average</name>
     <location>mask_average</location>
-    <description>Pipeline to mask a parametric map and compute mean value in the tumor region</description>
+    <description>Pipeline masks a parametric map and computes mean value in the Region of Interest</description>
     <documentation>
         <authors>
             <author>

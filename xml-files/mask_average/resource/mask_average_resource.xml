@@ -4,7 +4,7 @@
 	<name>./run_mask_average.sh</name>
 	<location>/home/xnat/pipeline/xnat-pipeline-engine/templates/scripts/mask_average/</location>
 	<type>Executable</type>
-	<description>Mask parametric maps and compute mean value</description>
+	<description>Pipeline masks a parametric map and computes mean value in the Region of Interest</description>
 	<input>
 		<argument id="input"/>
 		<argument id="output"/>
