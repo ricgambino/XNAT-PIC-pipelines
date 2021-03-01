@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Resource xmlns="http://nrg.wustl.edu/pipeline">
-	<name>./process_T2w_project.py</name>
-	<location>/home/xnat/pipeline/xnat-pipeline-engine/templates/scripts/process_T2w_project/</location>
+	<name>./process_T2_project.py</name>
+	<location>/home/xnat/pipeline/xnat-pipeline-engine/templates/scripts/process_T2_project/</location>
 	<type>Executable</type>
-	<description>Download T2w scans</description>
+	<description>Download T2 maps in a project</description>
 	<input>
 		<argument id="input"/>
 		<argument id="output"/>
