@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Resource xmlns="http://nrg.wustl.edu/pipeline">
-	<name>./run_process_T2w.sh</name>
-	<location>/home/xnat/pipeline/xnat-pipeline-engine/templates/scripts/process_T2w/</location>
+	<name>./run_process_T2.sh</name>
+	<location>/home/xnat/pipeline/xnat-pipeline-engine/templates/scripts/process_T2/</location>
 	<type>Executable</type>
-	<description>Process T2w scans</description>
+	<description>Process T2 map</description>
 	<input>
 		<argument id="input"/>
 		<argument id="output"/>

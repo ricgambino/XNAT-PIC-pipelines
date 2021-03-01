@@ -3,7 +3,7 @@
 <Pipeline xmlns="http://nrg.wustl.edu/pipeline" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nrg.wustl.edu/pipeline ..\schema\pipeline.xsd" xmlns:fileUtils="http://www.xnat.org/java/org.nrg.imagingtools.utils.FileUtils">
     <name>Process T1 SR map</name>
     <location>process_T1_SR</location>
-    <description>Pipeline processing T1 Sat Rec maps</description>
+    <description>Pipeline processing T1 Sat Rec map</description>
     <documentation>
         <authors>
             <author>

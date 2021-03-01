@@ -16,9 +16,9 @@ echo $output > "/home/xnat/output.txt"
 #/usr/local/MATLAB/R2015B/bin/matlab
 
 /usr/local/bin/matlab -nosplash -nodisplay << END || die "Matlab processing failed" 
-addpath(genpath('/home/xnat/pipeline/xnat-pipeline-engine/templates/scripts/process_T2w')); 
+addpath(genpath('/home/xnat/pipeline/xnat-pipeline-engine/templates/scripts/process_T2')); 
 addpath(genpath('/home/xnat/Documents/Executables/Matlab-files'));
-process_T2w('$input','$output') 
+process_T2('$input','$output') 
 exit; 
 END
 
