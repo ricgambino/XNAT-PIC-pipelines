@@ -2,7 +2,7 @@
 
 <Resource xmlns="http://nrg.wustl.edu/pipeline">
 	<name>./process_DWI_project.py</name>
-	<location>/home/xnat/pipeline/xnat-pipeline-engine/templates/scripts/process_DWI/</location>
+	<location>/home/xnat/pipeline/xnat-pipeline-engine/templates/scripts/process_DWI_project/</location>
 	<type>Executable</type>
 	<description>Process DWI maps in a project</description>
 	<input>
