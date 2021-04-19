@@ -180,7 +180,7 @@
                 <argument id="remote">
                 <!--    <value>^concat(/Pipeline/parameters/parameter[name='resolved_host']/values/unique/text(),'/data/projects','/',Pipeline/parameters/parameter[name='project']/values/unique/text(),'/subjects','/',/Pipeline/parameters/parameter[name='subject']/values/unique/text(),'/resources','/',/Pipeline/parameters/parameter[name='resource']/values/unique/text(),'/files')^</value>-->
 		<!-- <value>^concat('"',/Pipeline/parameters/parameter[name='resolved_host']/values/unique/text(),'/data/experiments/',/Pipeline/parameters/parameter[name='id']/values/unique/text(),'/resources/PROCESSED_T2w/files"')^</value> -->
-                <value>^concat('"',/Pipeline/parameters/parameter[name='resolved_host']/values/unique/text(),'/data/experiments/',/Pipeline/parameters/parameter[name='id']/values/unique/text(),'/scans/',/Pipeline/parameters/parameter[name='paramscanids']/values/unique/text(),'/resources/PROCESSED_T2w/files"')^</value>
+                <value>^concat('"',/Pipeline/parameters/parameter[name='resolved_host']/values/unique/text(),'/data/experiments/',/Pipeline/parameters/parameter[name='id']/values/unique/text(),'/scans/',/Pipeline/parameters/parameter[name='paramscanids']/values/unique/text(),'/resources/PROCESSED_T2/files"')^</value>
 
                 </argument>
             </resource>
