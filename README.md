@@ -217,8 +217,6 @@ In particular, for the *Mask_Average* XNAT-PIC Pipeline you need to install Pyth
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-For a more detailed guide on how to use XNAT-PIC, please visit ...
-
 ### MRI2DICOM and XNAT-PIC Uploader
 
 You can launch MRI2DICOM and the XNAT-PIC Uploader by running `launcher.py` in your Python IDE or via operating system command-line or terminal:
@@ -296,14 +294,24 @@ Thank you!
 
 XNAT-PIC is distributed under the terms of the GNU General Public License (GPL) v3 or any later version as stated by the Free Software Foundation. See [`LICENSE`](https://github.com/szullino/XNAT-PIC-Readme/blob/master/LICENSE.txt) for more information.
 
-
 <!-- CITATION -->
 ## Citation
 
-Please cite these repositories by using: 
+Please, **cite these repositories** by using: <br>
 
-## Media
+* S. Zullino, A. Paglialonga, W. Dastrù, D. L. Longo, S. Aime. XNAT-PIC: Extending XNAT to Preclinical Imaging Centers, 2021. DOI: https://arxiv.org/abs/2103.02044
 
+## News & Media
+
+* "Demonstrator 5: XNAT-PIC: expanding XNAT for image archiving and processing to Preclinical Imaging Centers". EOSC-Life website, https://www.eosc-life.eu/d5/
+
+* "Towards sharing and reusing of preclinical image data". Euro-Bioimaging website, https://www.eurobioimaging.eu/news/towards-sharing-and-reusing-of-preclinical-image-data/
+
+* "Data Management: Biological and Preclinical Imaging Perspective". Euro-Bioimaging Virtual Pub, February 12th, 2021. <br>
+[![](https://img.youtube.com/vi/QNiAGuFk53w/0.jpg)](https://youtu.be/QNiAGuFk53w "")
+
+* "XNAT-PIC: expanding XNAT for image archiving and processing to Preclinical Imaging Centers". Demonstrator 5 from Populating EOSC-Life: Success stories for the Demonstrators – Session 1 from January 13, 2021.<br>
+[![](https://img.youtube.com/vi/cpEcfIJJqCo/0.jpg)](https://youtu.be/cpEcfIJJqCo "")
 
 
 <!-- CONTACT -->
