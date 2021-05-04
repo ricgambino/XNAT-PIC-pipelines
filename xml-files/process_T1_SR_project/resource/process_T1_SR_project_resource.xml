@@ -2,7 +2,7 @@
 
 <Resource xmlns="http://nrg.wustl.edu/pipeline">
 	<name>./process_T1_SR_project.py</name>
-	<location>/home/xnat/pipeline/xnat-pipeline-engine/templates/scripts/process_T1_SR/</location>
+	<location>/home/xnat/pipeline/xnat-pipeline-engine/templates/scripts/process_T1_SR_project/</location>
 	<type>Executable</type>
 	<description>Process T1 Sat Rec maps in a project</description>
 	<input>
