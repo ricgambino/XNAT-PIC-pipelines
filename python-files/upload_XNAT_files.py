@@ -14,7 +14,6 @@ def upload_XNAT_files(download_info, path, xnat_folder):
     url = "/project/"
     path = os.path.expanduser("~") + "/Documents/.central.cfg"
     for j in range(0, len(download_info)):
-
         for experiment_dir in download_info[j]["Scan Dirs"]:
             # print("Scan dir è {}",format(experiment_dir))
             list_files = os.listdir(
@@ -24,7 +23,12 @@ def upload_XNAT_files(download_info, path, xnat_folder):
                 + "/"
                 + download_info[j]["Scan ID"]
             )
-
+	    folder2xnat = (download_info[j]["Subject Folder"]
+        			+ "/"
+        			+ download_info[j]["Session ID"]
+        			+ "/"
+        			+ download_info[j]["Scan ID"])
+	    print('folder2xnat is',folder2xnat)	
             # file_folder=(download_info[j]["Subject Folder"]+'/'+scan_dirs)
             # tmp=file_folder.split('PROCESSED/')
             # tmp=tmp[1].split('/')
@@ -33,8 +37,8 @@ def upload_XNAT_files(download_info, path, xnat_folder):
             # print(list_files)
             # print(file_folder)
             for files in list_files:
-                # file_path=download_info[j]["Subject Folder"]+'/'+scan_dirs+'/'+files
-                # print(file_path)
+                #file_path=download_info[j]["Subject Folder"]+'/'+scan_dirs+'/'+files
+                #print(file_path)
                 central = Interface(config=path)
                 try:
                     serverurl = (
@@ -47,8 +51,7 @@ def upload_XNAT_files(download_info, path, xnat_folder):
                         + "/"
                     )
                     experiment = central.select(serverurl)
-
-                    #### C'ERA SCAN_ID AL POSTO DI DOWNLOAD_INFO........
+		    os.chdir(folder2xnat)
                     experiment.resource(xnat_folder).file(files).insert(files)
                 finally:
                     central.disconnect()
